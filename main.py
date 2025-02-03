@@ -1,15 +1,14 @@
-import phys
+import constants
+
 from phys import Physics
 from display import Display
 import time
 
-DT = phys.DT
-BODIES = phys.BODIES
-DIMENSIONS = phys.DIMENSIONS
+DT = constants.DT
+BODIES = constants.BODIES
+DIMENSIONS = constants.DIMENSIONS
 
-SCREEN_LENGTH = 50
-SCREEN_HEIGHT = 25
-REFRESH_RATE_HZ = 50
+REFRESH_RATE_HZ = constants.REFRESH_RATE_HZ
 
 physics = Physics()
 display = Display()

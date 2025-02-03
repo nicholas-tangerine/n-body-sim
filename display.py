@@ -1,13 +1,12 @@
-import phys
-import time
+import constants
 
-SCREEN_LENGTH = 220
-SCREEN_HEIGHT = 50
+SCREEN_LENGTH = constants.SCREEN_LENGTH
+SCREEN_HEIGHT = constants.SCREEN_HEIGHT
 
-MIN_X = phys.MIN_X
-MAX_X = phys.MAX_X
-MIN_Y = phys.MIN_Y
-MAX_Y = phys.MAX_Y
+MIN_X = constants.MIN_X
+MAX_X = constants.MAX_X
+MIN_Y = constants.MIN_Y
+MAX_Y = constants.MAX_Y
 
 class Display:
     def __init__(self, height = SCREEN_HEIGHT, length = SCREEN_LENGTH):

@@ -1,21 +1,23 @@
+import constants
+
 import particle
 from particle import Particle
 import random
 
-DIMENSIONS = particle.DIMENSIONS
-BODIES = 11
-DT = 1e-5
-G = 6.67e-11
+DIMENSIONS = constants.DIMENSIONS
+BODIES = constants.BODIES
+DT = constants.DT
+G = constants.G
 
 
-MIN_MASS = 1e21
-MAX_MASS = 1e23
-MIN_X = -500
-MIN_Y = -500
-MAX_X = 500
-MAX_Y = 500
+MIN_MASS = constants.MIN_MASS
+MAX_MASS = constants.MAX_MASS
+MIN_X = constants.MIN_X
+MIN_Y = constants.MIN_Y
+MAX_X = constants.MAX_X
+MAX_Y = constants.MAX_Y
 
-SPAWN_CONST = 0.5
+INITIAL_POSITION_FACTOR = constants.INITIAL_POSITION_FACTOR
 
 class Physics:
     def __init__(self):
@@ -27,8 +29,8 @@ class Physics:
 
         # initialize all particles
         while len(initCoordsAllParticles) < BODIES:
-            x = SPAWN_CONST * random.uniform(MIN_X, MAX_X)
-            y = SPAWN_CONST * random.uniform(MIN_Y, MAX_Y)
+            x = INITIAL_POSITION_FACTOR * random.uniform(MIN_X, MAX_X)
+            y = INITIAL_POSITION_FACTOR * random.uniform(MIN_Y, MAX_Y)
 
             coords = [x, y]
             if coords in initCoordsAllParticles:
@@ -99,8 +101,6 @@ class Physics:
             out.append(accel)
 
         return out
-
-
 
     def print_coords(self):
         for particle in self.particles:

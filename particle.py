@@ -1,4 +1,6 @@
-DIMENSIONS = 2
+import constants
+
+DIMENSIONS = constants.DIMENSIONS
 
 class Particle:
     def __init__(self, mass, coords, v = None, a = None):
@@ -30,4 +32,4 @@ class Particle:
         """Updates coordinates; p = p_0 + vt + 0.5at^2"""
 
         for i in range(DIMENSIONS):
-            self.coords[i] += self.velocity[i] * dt #+ 0.5 * self.accel[i] * dt * dt
+            self.coords[i] += self.velocity[i] * dt + 0.5 * self.accel[i] * dt * dt
