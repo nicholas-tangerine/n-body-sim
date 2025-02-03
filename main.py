@@ -1,7 +1,7 @@
-from src import constants
+import constants
 
-from src.phys import Physics
-from src.display import Display
+from phys import Physics
+from display import Display
 import time
 
 DT = constants.DT
