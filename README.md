@@ -2,4 +2,5 @@
 
 3 body simulation but for n bodies.
 
-TODO: use .config instead of defining consts
+probably should figure out how to use [curses](https://github.com/python/cpython/tree/main/Lib/curses)
+
