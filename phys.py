@@ -2,7 +2,10 @@ import constants
 
 import particle
 from particle import Particle
+
 import random
+
+import time
 
 DIMENSIONS = constants.DIMENSIONS
 BODIES = constants.BODIES
@@ -12,10 +15,15 @@ G = constants.G
 
 MIN_MASS = constants.MIN_MASS
 MAX_MASS = constants.MAX_MASS
+
 MIN_X = constants.MIN_X
-MIN_Y = constants.MIN_Y
 MAX_X = constants.MAX_X
+
+MIN_Y = constants.MIN_Y
 MAX_Y = constants.MAX_Y
+
+MIN_Z = constants.MIN_Z
+MAX_Z = constants.MAX_Z
 
 INITIAL_POSITION_FACTOR = constants.INITIAL_POSITION_FACTOR
 
@@ -26,13 +34,17 @@ class Physics:
         self.particles = []
         initCoordsAllParticles = []
 
-
         # initialize all particles
         while len(initCoordsAllParticles) < BODIES:
             x = INITIAL_POSITION_FACTOR * random.uniform(MIN_X, MAX_X)
             y = INITIAL_POSITION_FACTOR * random.uniform(MIN_Y, MAX_Y)
-
+            
             coords = [x, y]
+
+            if DIMENSIONS > 2:
+                z = INITIAL_POSITION_FACTOR * random.uniform(MIN_Z, MAX_Z)
+                coords.append(z)
+
             if coords in initCoordsAllParticles:
                 continue
 
@@ -43,10 +55,13 @@ class Physics:
 
 
     def update_accel(self):
-        """Updates all particle's acceleration based on F = Gmmr/|r|^3"""
+        """
+        Updates all particle's acceleration based on F = Gmmr/|r|^3
+        Also checks to make sure particles are on screen. if not, deleted from mem
+        """
 
         for p1 in self.particles:
-            new_accel = []
+            new_accel = [0] * DIMENSIONS
 
             for p2 in self.particles:
                 if p1 is p2:
@@ -56,13 +71,15 @@ class Physics:
                 r = sum(r_squared) ** 0.5
 
                 for dim in range(DIMENSIONS):
-                    a_dim = -G * p2.mass * dist_vector[dim] / (r ** 3)
-                    new_accel.append(a_dim)
+                    new_accel[dim] += -G * p2.mass * dist_vector[dim] / (r ** 3)
 
             p1.set_accel(new_accel)
+        
+        for i in range(len(self.particles)-1, -1, -1):
+            particle = self.particles[i]
 
-
-
+            if particle.gone_forever():
+                del self.particles[i]
 
     def update_velocity(self):
         """Updates all particle's velocities based on acceleration and current velocity"""
@@ -75,6 +92,15 @@ class Physics:
 
         for particle in self.particles:
             particle.update_coords(DT)
+
+
+    def get_particles(self):
+        out = []
+        
+        for particle in self.particles:
+            out.append(particle)
+
+        return out
 
     def get_coords(self):
         out = []
